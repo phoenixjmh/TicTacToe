@@ -1,0 +1,16 @@
+
+*{
+    --tilesize:100px;
+}
+
+
+.game-board{
+    width:calc(var(--tilesize)* 3.2);
+    display:flex;
+    flex-wrap: wrap;
+}
+.tile{
+    border:2px solid black;
+    width:var(--tilesize);
+    height:var(--tilesize);
+}
