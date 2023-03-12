@@ -25,7 +25,7 @@ function Tile(id, contents, isBlank = true) {
 
   // eslint-disable-next-line no-return-assign
   const setTile = (newContents) => (this.contents = newContents);
-   this.getTile = () => this.contents;
+  this.getTile = () => this.contents;
 
   function setBlankFalse() {
     isBlank = false;
@@ -67,117 +67,172 @@ const gameBoard = (function () {
     }
   };
 
-  const checkIfWin = (symbolToCheck) =>{
-    if(tiles[0].contents===symbolToCheck &&tiles[1].contents===symbolToCheck &&tiles[2].contents===symbolToCheck ) // TOP HORZ
-    {
-        gameLoop.endGame(symbolToCheck);
-        gameLoop.setGameOver();
-    }
-    if(tiles[3].contents===symbolToCheck &&tiles[4].contents===symbolToCheck &&tiles[5].contents===symbolToCheck ) // MIDDLE HORZ
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
+  // const checkIfWin = (symbolToCheck) => {
+  //   if (
+  //     tiles[0].contents === symbolToCheck &&
+  //     tiles[1].contents === symbolToCheck &&
+  //     tiles[2].contents === symbolToCheck
+  //   ) {
+  //     // TOP HORZ
+  //     gameLoop.endGame(symbolToCheck);
+  //     gameLoop.setGameOver();
+  //   }
+  //   if (
+  //     tiles[3].contents === symbolToCheck &&
+  //     tiles[4].contents === symbolToCheck &&
+  //     tiles[5].contents === symbolToCheck
+  //   ) {
+  //     // MIDDLE HORZ
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+
+  //   if (
+  //     tiles[6].contents === symbolToCheck &&
+  //     tiles[7].contents === symbolToCheck &&
+  //     tiles[8].contents === symbolToCheck
+  //   ) {
+  //     // BOTTOM HORZ
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  //   if (
+  //     tiles[0].contents === symbolToCheck &&
+  //     tiles[3].contents === symbolToCheck &&
+  //     tiles[6].contents === symbolToCheck
+  //   ) {
+  //     // LEFT VERT
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  //   if (
+  //     tiles[1].contents === symbolToCheck &&
+  //     tiles[4].contents === symbolToCheck &&
+  //     tiles[7].contents === symbolToCheck
+  //   ) {
+  //     // MID VERT
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  //   if (
+  //     tiles[2].contents === symbolToCheck &&
+  //     tiles[5].contents === symbolToCheck &&
+  //     tiles[8].contents === symbolToCheck
+  //   ) {
+  //     // BOTTOM VERT
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  //   if (
+  //     tiles[0].contents === symbolToCheck &&
+  //     tiles[4].contents === symbolToCheck &&
+  //     tiles[8].contents === symbolToCheck
+  //   ) {
+  //     // LEFT DIAG
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  //   if (
+  //     tiles[2].contents === symbolToCheck &&
+  //     tiles[4].contents === symbolToCheck &&
+  //     tiles[6].contents === symbolToCheck
+  //   ) {
+  //     // RIGHT DIAG
+  //     gameLoop.endGame(symbolToCheck);
+  //   }
+  // };
+  const checkIfWin = (symbolToCheck) => {
+    if (
+      tiles[0].contents === symbolToCheck &&
+      tiles[1].contents === symbolToCheck &&
+      tiles[2].contents === symbolToCheck||
     
-    if(tiles[6].contents===symbolToCheck &&tiles[7].contents===symbolToCheck &&tiles[8].contents===symbolToCheck ) // BOTTOM HORZ
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
-    if(tiles[0].contents===symbolToCheck &&tiles[3].contents===symbolToCheck &&tiles[6].contents===symbolToCheck ) // LEFT VERT
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
-    if(tiles[1].contents===symbolToCheck &&tiles[4].contents===symbolToCheck &&tiles[7].contents===symbolToCheck ) // MID VERT
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
-    if(tiles[2].contents===symbolToCheck &&tiles[5].contents===symbolToCheck &&tiles[8].contents===symbolToCheck ) // BOTTOM VERT
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
-    if(tiles[0].contents===symbolToCheck &&tiles[4].contents===symbolToCheck &&tiles[8].contents===symbolToCheck ) // LEFT DIAG
-    {
-        gameLoop.endGame(symbolToCheck);
-    }
-    if(tiles[2].contents===symbolToCheck &&tiles[4].contents===symbolToCheck &&tiles[6].contents===symbolToCheck ) // RIGHT DIAG
-    {
-        gameLoop.endGame(symbolToCheck);
+      tiles[3].contents === symbolToCheck &&
+      tiles[4].contents === symbolToCheck &&
+      tiles[5].contents === symbolToCheck||
+     
+      tiles[6].contents === symbolToCheck &&
+      tiles[7].contents === symbolToCheck &&
+      tiles[8].contents === symbolToCheck||
+    
+      tiles[0].contents === symbolToCheck &&
+      tiles[3].contents === symbolToCheck &&
+      tiles[6].contents === symbolToCheck||
+    
+      tiles[1].contents === symbolToCheck &&
+      tiles[4].contents === symbolToCheck &&
+      tiles[7].contents === symbolToCheck||
+   
+      tiles[2].contents === symbolToCheck &&
+      tiles[5].contents === symbolToCheck &&
+      tiles[8].contents === symbolToCheck||
+    
+      tiles[0].contents === symbolToCheck &&
+      tiles[4].contents === symbolToCheck &&
+      tiles[8].contents === symbolToCheck||
+   
+      tiles[2].contents === symbolToCheck &&
+      tiles[4].contents === symbolToCheck &&
+      tiles[6].contents === symbolToCheck
+    ) {
+      gameLoop.endGame(symbolToCheck);
+      gameLoop.setGameOver();
     }
   };
-    
 
-  return { tiles, render, gameBoardContainer,checkIfWin };
+  return { tiles, render, gameBoardContainer, checkIfWin };
 })();
 
 // eslint-disable-next-line func-names, no-unused-vars
 const gameLoop = (function () {
-  
-  let gameOver=false;
-  this.gameOver=gameOver;
-  function setGameOver()
-  {
-    gameOver=true;
+  let gameOver = false;
+  this.gameOver = gameOver;
+  function setGameOver() {
+    gameOver = true;
     return gameOver;
   }
-   
+
   const playerOne = Player("Player1", "X", true);
 
   const playerTwo = Player("Player2", "O", false);
   playerOne.setIsTurn();
   playerTwo.setIsTurn();
-//   console.log(playerOne);
-//   console.log(playerTwo);
+  
   gameBoard.render();
   const tileContainers = gameBoard.gameBoardContainer.querySelectorAll(".tile");
 
   tileContainers.forEach((item, index) => {
+    const tileContainer = item;
+    tileContainer.addEventListener("click", () => {
+      const thisTile = gameBoard.tiles[index];
+      console.log(thisTile);
+      if (thisTile.getIsBlank() && !gameOver) {
+        if (playerOne.getIsTurn()) {
+          thisTile.setTile("X");
+          thisTile.setBlankFalse();
 
-        const tileContainer = item;
-        tileContainer.addEventListener("click", () => {
-          const thisTile = gameBoard.tiles[index];
-            console.log(thisTile);
-          if (thisTile.getIsBlank()&&!gameOver) {
-            if (playerOne.getIsTurn()) {
-                thisTile.setTile("X");
-                thisTile.setBlankFalse();
-                
-                tileContainer.textContent = thisTile.getTile();
-                gameBoard.tiles[index].contents = thisTile.getTile();
-               
-                playerOne.switchTurn();
-                playerTwo.switchTurn();
-                gameBoard.checkIfWin('X');
-            } else if (playerTwo.getIsTurn()&&!gameOver){
-                thisTile.setTile("O");
-                thisTile.setBlankFalse();
-                tileContainer.textContent = thisTile.getTile();
-                gameBoard.tiles[index].contents = thisTile.getTile();
-    
-                playerOne.switchTurn();
-                playerTwo.switchTurn();
-               
-                gameBoard.checkIfWin('O');
-    
-            }
-    
+          tileContainer.textContent = thisTile.getTile();
+          gameBoard.tiles[index].contents = thisTile.getTile();
+
+          playerOne.switchTurn();
+          playerTwo.switchTurn();
+          gameBoard.checkIfWin("X");
+        } else if (playerTwo.getIsTurn() && !gameOver) {
+          thisTile.setTile("O");
+          thisTile.setBlankFalse();
+          tileContainer.textContent = thisTile.getTile();
+          gameBoard.tiles[index].contents = thisTile.getTile();
+
+          playerOne.switchTurn();
+          playerTwo.switchTurn();
+
+          gameBoard.checkIfWin("O");
         }
-       
-        
-        });
-      
+      }
+    });
   });
-  function endGame(winningSymbol)
-  {
-      
-      
-      const game = gameBoard.gameBoardContainer;
-      console.log(gameOver);
-      const winPanel=document.createElement('div');
-      winPanel.className='win-panel';
-      winPanel.textContent= `${winningSymbol  } WINS!`;
-      
-      // game.remove();
-      document.body.appendChild(winPanel);
+  function endGame(winningSymbol) {
+    
+    const winPanel = document.createElement("div");
+    winPanel.className = "win-panel";
+    winPanel.textContent = `${winningSymbol} WINS!`;
 
-
+    
+    document.body.appendChild(winPanel);
   }
-return {endGame,setGameOver}})();
+  return { endGame, setGameOver };
+})();
