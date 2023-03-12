@@ -1,11 +1,20 @@
 
 *{
-    --tilesize:100px;
+    --tilesize:20vw;
+    font-size:3vw;
+    margin:0;
 }
-
+body{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .game-board{
     width:calc(var(--tilesize)* 3.2);
+    height:40%;
     display:flex;
     flex-wrap: wrap;
 }
@@ -13,4 +22,21 @@
     border:2px solid black;
     width:var(--tilesize);
     height:var(--tilesize);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.contents{
+    width:100%;
+    height:100%;
+    line-height: 6rem;
+    vertical-align: middle;
+    padding:auto;
+    font-size:6rem;
+    color:blue;
+    text-align: center;
+}
+.win-panel{
+    border:2px solid red;
+    
 }
