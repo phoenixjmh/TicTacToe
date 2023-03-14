@@ -13,24 +13,27 @@ const introForm  = (function(){
   const playerOneField = document.querySelector('#player1-name');
   const playerTwoField = document.querySelector('#player2-name');
   const submitFormButton = document.querySelector('#submit-names');
+  const resetButton=document.createElement('button');
+  resetButton.textContent='Reset';
+  resetButton.className='reset-button';
   let currentLoop;
   let playerOneName;
   let playerTwoName;
   submitFormButton.addEventListener('click', () => {
     playerOneName = playerOneField.value;
      playerTwoName = playerTwoField.value;
-    console.log(playerOneName,playerTwoName)
     introForm.setGameStart();
     introPanel.remove();
     currentLoop = gameLoop();
     
-    
+    document.body.appendChild(resetButton);
   })
+  resetButton.addEventListener('click',()=>getLoop().currentBoard.reset());
   const getLoop = ()=>currentLoop;
   const getPlayerOneName = ()=> playerOneName;
   const getPlayerTwoName = ()=> playerTwoName;
 
-return {gameStart,setGameStart,currentLoop,getLoop,getPlayerOneName,getPlayerTwoName}
+return {resetButton,gameStart,setGameStart,currentLoop,getLoop,getPlayerOneName,getPlayerTwoName}
 })();
 
 function Player(name, gamePiece, isTurn) {
@@ -65,12 +68,17 @@ function Tile(id, contents, isBlank = true) {
     this.isBlank = isBlank;
     return this.isBlank;
   }
+  function setBlankTrue(){
+    isBlank=true;
+    this.isBlank=isBlank;
+    return this.isBlank;
+  }
   function getIsBlank() {
     this.isBlank = isBlank;
     return this.isBlank;
   }
 
-  return { setTile, getTile, id, contents, setBlankFalse, getIsBlank };
+  return { setTile,isBlank, getTile, id, contents, setBlankFalse,setBlankTrue, getIsBlank };
 }
 const gameBoard = (function () {
   const gameBoardContainer = document.createElement('div');
@@ -104,6 +112,10 @@ const gameBoard = (function () {
     }
     return gameBoard;
   };
+  const rerender =function(){
+    let tileContentsList = document.querySelectorAll('.contents');
+    tileContentsList.forEach((item,index)=>item.textContent=tiles[index].contents);
+  }
 
   const checkIfWin = (symbolToCheck) => {
     let winningPlayer;
@@ -150,16 +162,21 @@ const gameBoard = (function () {
     for(let i=0;i<tiles.length;i++)
     {
       tiles[i].contents='';
-      tiles[i].isBlank=true;
+      tiles[i].setBlankTrue();
     }
-    let deleteLoop = document.querySelector('.game-board');
-    deleteLoop.remove();
+    let deleteLoop = document.querySelectorAll('.contents');
     
-    introForm.currentLoop=gameLoop();
+    
+    introForm.getLoop().currentBoard.rerender();
+    if(introForm.getLoop().playerTwo.getIsTurn())
+    {
+      introForm.getLoop().playerTwo.switchTurn();
+      introForm.getLoop().playerOne.switchTurn();
+    }
     
   }
 
-  return { tiles, render, gameBoardContainer, checkIfWin,reset };
+  return { tiles, render,rerender, gameBoardContainer, checkIfWin,reset };
 });
 
 // eslint-disable-next-line func-names, no-unused-vars
@@ -204,6 +221,7 @@ const gameLoop = (function () {
         } else if (playerTwo.getIsTurn() && !gameOver) {
           thisTile.setTile("O");
           thisTile.setBlankFalse();
+          tileContainer.style.color = "blue";
 
           tileContainer.textContent = thisTile.getTile();
           currentBoard.tiles[index].contents = thisTile.getTile();
@@ -218,6 +236,7 @@ const gameLoop = (function () {
   });
   function endGame(winningSymbol,gameBoard) {
     const winPanel = document.createElement("div");
+    introForm.resetButton.remove();
     winPanel.className = "win-panel";
     winPanel.textContent = `${winningSymbol} WINS!`;
     console.log(introForm.getLoop().currentBoard.gameBoardContainer);
