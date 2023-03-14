@@ -1,4 +1,27 @@
+@keyframes movepanel{
+   from{
+        top:0;
+        color:white;
+        font-size:1rem;
+    
+   }
+    to{
+        font-size: 5rem;
+        top:40%;
+        color:black;
+    }
+}
+@keyframes moveboard {
+   
+    to {
 
+        -webkit-transform: translate(-40em, 0);
+            -moz-transform: translate(-40em, 0);
+            -o-transform: translate(-40em, 0);
+            -ms-transform: translate(-40em, 0);
+            transform: translate(-40em, 0);
+    }
+}
 *{
     --tilesize:20vw;
     font-size:3vw;
@@ -14,12 +37,13 @@ body{
 
 .game-board{
     width:calc(var(--tilesize)* 3.2);
-    height:40%;
+    /* height:60%; */
     display:flex;
     flex-wrap: wrap;
+    font-size:.8rem;
 }
 .tile{
-    border:2px solid black;
+    /* border:2px solid black; */
     width:var(--tilesize);
     height:var(--tilesize);
     display:flex;
@@ -36,7 +60,63 @@ body{
     color:blue;
     text-align: center;
 }
-.win-panel{
-    border:2px solid red;
-    
+#tile1{
+    border-right:5px solid black;
+    border-bottom:5px solid black;
 }
+#tile2 {
+    border-bottom: 5px solid black;
+}
+#tile3 {
+    border-bottom:5px solid black;
+        border-left: 5px solid black;
+}
+#tile4{
+    border-right:5px solid black;
+}
+#tile6{
+    border-left:5px solid black;
+}
+#tile7{
+    border-right:5px solid black;
+    border-top:5px solid black;
+}
+#tile8{
+    border-top:5px solid black;
+}
+#tile9{
+    border-left:5px solid black;
+    border-top:5px solid black;
+}
+
+.animation{
+   
+   animation-name:moveboard;
+   animation-duration: 1s;
+   animation-fill-mode: forwards;
+    }
+    .win-panel{
+        color:white;
+        position:absolute;
+        top:0;
+       animation-name:movepanel;
+       animation-delay:1s;
+       animation-duration:2s;
+       animation-fill-mode:forwards;
+       
+        
+    }
+    .intro-panel{
+        background-color:gray;
+        height:60%;
+        width:30%;
+        border-radius:1rem;
+        display:flex;
+        flex-direction:column;
+    }
+    .intro-panel .upper-panel{
+        border:2px solid blue;
+
+    }
+   
+    

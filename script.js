@@ -67,40 +67,32 @@ const gameBoard = (function () {
     }
   };
 
- 
   const checkIfWin = (symbolToCheck) => {
     if (
-      tiles[0].contents === symbolToCheck &&
-      tiles[1].contents === symbolToCheck &&
-      tiles[2].contents === symbolToCheck||
-    
-      tiles[3].contents === symbolToCheck &&
-      tiles[4].contents === symbolToCheck &&
-      tiles[5].contents === symbolToCheck||
-     
-      tiles[6].contents === symbolToCheck &&
-      tiles[7].contents === symbolToCheck &&
-      tiles[8].contents === symbolToCheck||
-    
-      tiles[0].contents === symbolToCheck &&
-      tiles[3].contents === symbolToCheck &&
-      tiles[6].contents === symbolToCheck||
-    
-      tiles[1].contents === symbolToCheck &&
-      tiles[4].contents === symbolToCheck &&
-      tiles[7].contents === symbolToCheck||
-   
-      tiles[2].contents === symbolToCheck &&
-      tiles[5].contents === symbolToCheck &&
-      tiles[8].contents === symbolToCheck||
-    
-      tiles[0].contents === symbolToCheck &&
-      tiles[4].contents === symbolToCheck &&
-      tiles[8].contents === symbolToCheck||
-   
-      tiles[2].contents === symbolToCheck &&
-      tiles[4].contents === symbolToCheck &&
-      tiles[6].contents === symbolToCheck
+      (tiles[0].contents === symbolToCheck &&
+        tiles[1].contents === symbolToCheck &&
+        tiles[2].contents === symbolToCheck) ||
+      (tiles[3].contents === symbolToCheck &&
+        tiles[4].contents === symbolToCheck &&
+        tiles[5].contents === symbolToCheck) ||
+      (tiles[6].contents === symbolToCheck &&
+        tiles[7].contents === symbolToCheck &&
+        tiles[8].contents === symbolToCheck) ||
+      (tiles[0].contents === symbolToCheck &&
+        tiles[3].contents === symbolToCheck &&
+        tiles[6].contents === symbolToCheck) ||
+      (tiles[1].contents === symbolToCheck &&
+        tiles[4].contents === symbolToCheck &&
+        tiles[7].contents === symbolToCheck) ||
+      (tiles[2].contents === symbolToCheck &&
+        tiles[5].contents === symbolToCheck &&
+        tiles[8].contents === symbolToCheck) ||
+      (tiles[0].contents === symbolToCheck &&
+        tiles[4].contents === symbolToCheck &&
+        tiles[8].contents === symbolToCheck) ||
+      (tiles[2].contents === symbolToCheck &&
+        tiles[4].contents === symbolToCheck &&
+        tiles[6].contents === symbolToCheck)
     ) {
       gameLoop.endGame(symbolToCheck);
       gameLoop.setGameOver();
@@ -122,11 +114,12 @@ const gameLoop = (function () {
   const playerOne = Player("Player1", "X", true);
 
   const playerTwo = Player("Player2", "O", false);
-  playerOne.setIsTurn();          
+  playerOne.setIsTurn();
   playerTwo.setIsTurn();
-  
+
   gameBoard.render();
-  const tileContainers = gameBoard.gameBoardContainer.querySelectorAll(".contents");
+  const tileContainers =
+    gameBoard.gameBoardContainer.querySelectorAll(".contents");
 
   tileContainers.forEach((item, index) => {
     const tileContainer = item;
@@ -134,13 +127,14 @@ const gameLoop = (function () {
       const thisTile = gameBoard.tiles[index];
       if (thisTile.getIsBlank() && !gameOver) {
         if (playerOne.getIsTurn()) {
-          // set current tile in array's content 
+          // set current tile in array's content
           thisTile.setTile("X");
           thisTile.setBlankFalse();
           // set corresponding HTML element's content to match
           tileContainer.textContent = thisTile.getTile();
+          tileContainer.style.color = 'red';
           gameBoard.tiles[index].contents = thisTile.getTile();
-          
+
           playerOne.switchTurn();
           playerTwo.switchTurn();
 
@@ -151,22 +145,20 @@ const gameLoop = (function () {
 
           tileContainer.textContent = thisTile.getTile();
           gameBoard.tiles[index].contents = thisTile.getTile();
-          
+
           playerOne.switchTurn();
           playerTwo.switchTurn();
-          
+
           gameBoard.checkIfWin("O");
         }
       }
     });
   });
   function endGame(winningSymbol) {
-    
     const winPanel = document.createElement("div");
     winPanel.className = "win-panel";
     winPanel.textContent = `${winningSymbol} WINS!`;
-
-    
+    gameBoard.gameBoardContainer.classList.add('animation');
     document.body.appendChild(winPanel);
   }
   return { endGame, setGameOver };
