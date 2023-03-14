@@ -141,12 +141,25 @@ const gameBoard = (function () {
       {
         winningPlayer=introForm.getLoop().playerTwo;
       }
-      introForm.getLoop().endGame(winningPlayer.name);
+      introForm.getLoop().endGame(winningPlayer.name,introForm.getLoop().currentBoard);
       introForm.getLoop().setGameOver();
     }
   };
+  const reset =()=>{
+    //RESET EVERYTHING, BUT KEEP THE PLAYER NAMES
+    for(let i=0;i<tiles.length;i++)
+    {
+      tiles[i].contents='';
+      tiles[i].isBlank=true;
+    }
+    let deleteLoop = document.querySelector('.game-board');
+    deleteLoop.remove();
+    
+    introForm.currentLoop=gameLoop();
+    
+  }
 
-  return { tiles, render, gameBoardContainer, checkIfWin };
+  return { tiles, render, gameBoardContainer, checkIfWin,reset };
 });
 
 // eslint-disable-next-line func-names, no-unused-vars
@@ -165,7 +178,7 @@ const gameLoop = (function () {
   const playerTwo = Player(introForm.getPlayerTwoName(), "O", false);
   playerOne.setIsTurn();
   playerTwo.setIsTurn();
-  const currentBoard =gameBoard();
+  let currentBoard =gameBoard();
   currentBoard.render();
   const tileContainers =
     currentBoard.gameBoardContainer.querySelectorAll(".contents");
@@ -203,14 +216,15 @@ const gameLoop = (function () {
       }
     });
   });
-  function endGame(winningSymbol) {
+  function endGame(winningSymbol,gameBoard) {
     const winPanel = document.createElement("div");
     winPanel.className = "win-panel";
     winPanel.textContent = `${winningSymbol} WINS!`;
-    this.currentBoard.gameBoardContainer.classList.add('animation');
+    console.log(introForm.getLoop().currentBoard.gameBoardContainer);
+    introForm.getLoop().currentBoard.gameBoardContainer.classList.add('animation'); // THIS DOESN'T WORK
     document.body.appendChild(winPanel);
   }
-  return { endGame, setGameOver,currentBoard,playerOne,playerTwo };
+  return { endGame, setGameOver,currentBoard,playerOne,playerTwo,tileContainers };
   
 });
 
