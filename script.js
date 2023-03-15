@@ -1,5 +1,4 @@
 /* eslint-disable guard-for-in */
-
 const introForm = (function () {
   let gameStart = false;
   function setGameStart() {
@@ -7,7 +6,7 @@ const introForm = (function () {
     this.gameStart = gameStart;
     return gameStart;
   }
-  const resetIcon='@UrL.Content("~/svg/reset.svg")';
+  const resetIcon = '@UrL.Content("~/svg/reset.svg")';
   const introPanel = document.querySelector(".intro-panel");
   const playerOneField = document.querySelector("#player1-name");
   const playerTwoField = document.querySelector("#player2-name");
@@ -125,10 +124,9 @@ const gameBoard = function () {
   };
   const rerender = function () {
     const tileContentsList = document.querySelectorAll(".contents");
-    tileContentsList.forEach(
-      (item, index) => {item.textContent = tiles[index].contents}
-   
-    );
+    tileContentsList.forEach((item, index) => {
+      item.textContent = tiles[index].contents;
+    });
   };
 
   const checkIfWin = (symbolToCheck) => {
@@ -171,7 +169,6 @@ const gameBoard = function () {
     }
   };
   const reset = () => {
-    
     for (let i = 0; i < tiles.length; i++) {
       tiles[i].contents = "";
       tiles[i].setBlankTrue();
@@ -187,8 +184,6 @@ const gameBoard = function () {
   return { tiles, render, rerender, gameBoardContainer, checkIfWin, reset };
 };
 
-
-
 const gameLoop = function () {
   let gameOver = false;
   this.gameOver = gameOver;
@@ -202,7 +197,7 @@ const gameLoop = function () {
   const playerTwo = Player(introForm.getPlayerTwoName(), "O", false);
   playerOne.setIsTurn();
   playerTwo.setIsTurn();
-  let currentBoard = gameBoard();
+  const currentBoard = gameBoard();
   currentBoard.render();
   const tileContainers =
     currentBoard.gameBoardContainer.querySelectorAll(".contents");
@@ -241,15 +236,14 @@ const gameLoop = function () {
       }
     });
   });
-  function endGame(winningSymbol, gameBoard) {
+  function endGame(winningSymbol) {
     const winPanel = document.createElement("div");
     introForm.resetButton.remove();
     winPanel.className = "win-panel";
     winPanel.textContent = `${winningSymbol} WINS!`;
-    console.log(introForm.getLoop().currentBoard.gameBoardContainer);
     introForm
       .getLoop()
-      .currentBoard.gameBoardContainer.classList.add("animation"); 
+      .currentBoard.gameBoardContainer.classList.add("animation");
     document.body.appendChild(winPanel);
   }
   return {

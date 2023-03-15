@@ -22,7 +22,7 @@
   }
 }
 * {
-  --tilesize: 20vw;
+  --tilesize: clamp(100px,20vw,150px);
   --gudorange: rgb(255, 145, 0);
   --ocolor: rgb(83, 83, 83);
   --softblack: rgb(4, 7, 15);
@@ -36,16 +36,17 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items:center;
+  justify-content: space-evenly;
   background-color: var(--softblack);
 }
 
 .game-board {
-  width: calc(var(--tilesize) * 3.2);
-  /* height:60%; */
+  width:clamp(350px, calc(var(--tilesize) * 3.5),700px);
+  
   display: flex;
   flex-wrap: wrap;
+  
   font-size: 0.8rem;
 }
 .tile {
@@ -59,10 +60,9 @@ body {
 .contents {
   width: 100%;
   height: 100%;
-  line-height: 20vw;
+  line-height: clamp(16px,20vw,150px);
   vertical-align: middle;
-  padding: auto;
-  font-size: 20vw;
+  font-size: clamp(16px,20vw,150px);
   color: blue;
   text-align: center;
 }
@@ -181,17 +181,17 @@ label {
   border: 1px solid var(--gudorange);
 }
 .reset-button {
-  position: relative;
-  top: 3rem;
-  height: 10vw;
-  width: 10vw;
+  height: calc(var(--tilesize)/1.7);
+  width: calc(var(--tilesize)/1.7);
+  position:relative;
+  right:1rem;
   background-color: var(--gudorange);
   -webkit-mask-image: url("svg/reset.svg");
-  -webkit-mask-size: 10vw;
+  -webkit-mask-size: calc(var(--tilesize)/1.7);
   mask-image: url("svg/reset.svg");
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   body {
     font-size: 3vh;
     background-color: var(--softblack);
@@ -218,6 +218,7 @@ label {
   }
   .contents {
     font-size: 6rem;
+    line-height:6rem;
   }
 }
 
