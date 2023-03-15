@@ -102,7 +102,7 @@ body {
 }
 
 .win-panel {
-  color: white;
+    color: var(--softblack);
   position: absolute;
   top: 0;
   animation-name: movepanel;

@@ -1,12 +1,11 @@
 /* eslint-disable guard-for-in */
-const introForm = (function () {
+const introForm = (()=> {
   let gameStart = false;
   function setGameStart() {
     gameStart = true;
     this.gameStart = gameStart;
     return gameStart;
   }
-  const resetIcon = '@UrL.Content("~/svg/reset.svg")';
   const introPanel = document.querySelector(".intro-panel");
   const playerOneField = document.querySelector("#player1-name");
   const playerTwoField = document.querySelector("#player2-name");
@@ -43,7 +42,6 @@ const introForm = (function () {
 
 function Player(name, gamePiece, isTurn) {
   this.name = name;
-
   this.gamePiece = gamePiece;
 
   function getIsTurn() {
@@ -66,7 +64,7 @@ function Tile(id, contents, isBlank = true) {
 
   // eslint-disable-next-line no-return-assign
   const setTile = (newContents) => (this.contents = newContents);
-  this.getTile = () => this.contents;
+  const getTile = () => this.contents;
 
   function setBlankFalse() {
     this.isBlank = false;
@@ -92,7 +90,7 @@ function Tile(id, contents, isBlank = true) {
     getIsBlank,
   };
 }
-const gameBoard = function () {
+const gameBoard = ()=> {
   const gameBoardContainer = document.createElement("div");
   gameBoardContainer.className = "game-board";
   document.body.appendChild(gameBoardContainer);
@@ -108,7 +106,7 @@ const gameBoard = function () {
   const tile9 = Tile("tile9", "");
   tiles.push(tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9);
 
-  const render = function () {
+  function render(){
     // eslint-disable-next-line no-restricted-syntax
     for (const t in tiles) {
       const tileContainer = document.createElement("div");
@@ -122,14 +120,15 @@ const gameBoard = function () {
     }
     return gameBoard;
   };
-  const rerender = function () {
+  function rerender () {
     const tileContentsList = document.querySelectorAll(".contents");
     tileContentsList.forEach((item, index) => {
+      // eslint-disable-next-line no-param-reassign
       item.textContent = tiles[index].contents;
     });
   };
 
-  const checkIfWin = (symbolToCheck) => {
+  function checkIfWin(symbolToCheck) {
     let winningPlayer;
     if (
       (tiles[0].contents === symbolToCheck &&
@@ -168,7 +167,7 @@ const gameBoard = function () {
       introForm.getLoop().setGameOver();
     }
   };
-  const reset = () => {
+  function reset() {
     for (let i = 0; i < tiles.length; i++) {
       tiles[i].contents = "";
       tiles[i].setBlankTrue();
@@ -184,16 +183,13 @@ const gameBoard = function () {
   return { tiles, render, rerender, gameBoardContainer, checkIfWin, reset };
 };
 
-const gameLoop = function () {
-  let gameOver = false;
-  this.gameOver = gameOver;
+const gameLoop = ()=> {
   function setGameOver() {
-    gameOver = true;
-    return gameOver;
+    this.gameOver = true;
+    return this.gameOver;
   }
 
   const playerOne = Player(introForm.getPlayerOneName(), "X", true);
-
   const playerTwo = Player(introForm.getPlayerTwoName(), "O", false);
   playerOne.setIsTurn();
   playerTwo.setIsTurn();
@@ -206,7 +202,7 @@ const gameLoop = function () {
     const tileContainer = item;
     tileContainer.addEventListener("click", () => {
       const thisTile = currentBoard.tiles[index];
-      if (thisTile.getIsBlank() && !gameOver) {
+      if (thisTile.getIsBlank() && !this.gameOver) {
         if (playerOne.getIsTurn()) {
           // set current tile in array's content
           thisTile.setTile("X");
@@ -220,7 +216,7 @@ const gameLoop = function () {
           playerTwo.switchTurn();
 
           currentBoard.checkIfWin("X");
-        } else if (playerTwo.getIsTurn() && !gameOver) {
+        } else if (playerTwo.getIsTurn() && !this.gameOver) {
           thisTile.setTile("O");
           thisTile.setBlankFalse();
           tileContainer.style.color = "var(--ocolor)";
